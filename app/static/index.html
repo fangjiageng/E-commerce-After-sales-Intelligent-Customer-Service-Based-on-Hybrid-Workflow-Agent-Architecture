@@ -1,0 +1,1003 @@
+<!doctype html>
+<!--
+  来源：公众号@小林coding
+  后端八股网站：xiaolincoding.com
+  Agent网站：xiaolinnote.com
+  简历模版：jianli.xiaolinnote.com
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MewHelp · 小喵智能客服</title>
+  <meta name="theme-color" content="#356652" />
+  <meta name="description" content="小喵智能客服，帮你解答商品选购、订单物流与售后问题。" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='2' y='2' width='4' height='4' fill='%232b2632'/><rect x='10' y='2' width='4' height='4' fill='%232b2632'/><rect x='2' y='4' width='12' height='9' fill='%232b2632'/><rect x='3' y='3' width='2' height='3' fill='%23ff9f57'/><rect x='11' y='3' width='2' height='3' fill='%23ff9f57'/><rect x='3' y='5' width='10' height='7' fill='%23ff9f57'/><rect x='5' y='7' width='1' height='2' fill='%232b2632'/><rect x='10' y='7' width='1' height='2' fill='%232b2632'/><rect x='7' y='9' width='2' height='1' fill='%23ff8095'/></svg>" />
+  <link rel="stylesheet" href="/static/chat.css" />
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+    <symbol id="i-cat" viewBox="0 0 32 32"><path d="M6 14V5l8 5h4l8-5v9c2 2 3 4 3 7 0 6-6 9-13 9S3 27 3 21c0-3 1-5 3-7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M11 18v2m10-2v2m-6 2h2m-1 0v3m0 0-3-1m3 1 3-1M1 20l6 1m18 0 6-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8 8H4l1.5-4A8 8 0 1 1 20 11.5Z"/><path d="M8 10h8m-8 4h5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 9 9-4M3 8l9 4v10M7.5 5.5l9 5V15"/></symbol>
+    <symbol id="i-return" viewBox="0 0 24 24"><path d="M5 10a8 8 0 1 1 0 6M5 4v6h6"/><path d="m9 14 2 2 4-4"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l2 13H3L5 8Zm3 1V6a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 8h18v5H3zM5 13v8h14v-8M12 8v13"/><path d="M12 8S5 9 5 5a2 2 0 0 1 4-1l3 4Zm0 0s7 1 7-3a2 2 0 0 0-4-1l-3 4Z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-1 .5-1 1.2-1 2.2M12 17h.01"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 4l-4 16"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </svg>
+  <a class="skip-link" href="#input">跳到消息输入框</a>
+  <div class="app">
+    <button class="sidebar-backdrop" type="button" aria-label="关闭会话导航" tabindex="-1"></button>
+    <aside id="sidebar" aria-label="会话导航">
+      <a class="brand" href="/" aria-label="MewHelp 首页">
+        <span class="brand-mark"><svg aria-hidden="true"><use href="#i-cat"/></svg></span>
+        <span><span class="brand-name">MewHelp<span style="color:#799165">.</span></span><span class="brand-caption">让每一次沟通，都有回应</span></span>
+      </a>
+      <button id="sidebar-close" class="icon-button" type="button" aria-label="关闭会话导航"><svg fill="none" stroke="currentColor" stroke-width="1.6"><use href="#i-close"/></svg></button>
+      <button id="new-chat" type="button"><span class="button-label"><svg fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-plus"/></svg>开启新对话</span><kbd>⌘ / Ctrl K</kbd></button>
+      <label class="search-box"><svg fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-search"/></svg><input id="conv-search" type="search" placeholder="搜索历史对话" aria-label="搜索历史对话" /></label>
+      <div class="sb-head"><span>最近对话</span><span id="conv-count">0</span></div>
+      <div id="conv-list" aria-label="历史对话列表"></div>
+      <div class="sidebar-bottom">
+        <button type="button" class="help-button" data-help><svg fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-help"/></svg>使用帮助<span style="margin-left:auto">↗</span></button>
+        <p class="project-note"><svg fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-code"/></svg>Powered by MewHelp<span style="margin-left:auto">v0.1</span></p>
+      </div>
+    </aside>
+    <main class="main">
+      <header>
+        <button id="menu-toggle" class="icon-button" type="button" aria-label="打开会话导航" aria-controls="sidebar" aria-expanded="false"><svg fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-menu"/></svg></button>
+        <div class="avatar lg" data-cat aria-hidden="true"></div>
+        <div class="head-meta"><span class="name">小喵 · 智能客服</span><span class="status">喵喵优选的贴心购物助手</span></div>
+        <div class="spacer"></div>
+        <span class="service-badge"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-spark"/></svg>AI 助手</span>
+        <button id="header-help" class="icon-button" type="button" aria-label="使用帮助" data-help><svg fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-help"/></svg></button>
+      </header>
+      <div id="messages" role="log" aria-label="聊天消息" aria-live="polite" aria-relevant="additions" tabindex="0"></div>
+      <footer>
+        <div id="activity" role="status" aria-live="polite"></div>
+        <div class="composer">
+          <textarea id="input" rows="1" aria-label="输入咨询消息" aria-describedby="input-hint" placeholder="有什么可以帮你？把问题交给小喵吧…"></textarea>
+          <button id="send" type="button" aria-label="发送消息" title="发送消息"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="composer-meta" id="input-hint"><span><svg fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#i-shield"/></svg>请勿发送密码、验证码等敏感信息</span><span class="keyboard-tip">Enter 发送 · Shift + Enter 换行</span></div>
+        <p class="foot-note">由 AI 提供支持，回答仅供参考 · 具体订单与售后结果请以实际处理为准</p>
+      </footer>
+    </main>
+  </div>
+
+  <div class="modal-mask" id="helpMask">
+    <div class="ticket-modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <h3 id="helpTitle">和小喵聊聊，从这里开始</h3>
+      <p class="sub">商品怎么选、包裹到哪了、如何退换货，都可以直接提问。点击首页问题卡片，也能快速开始咨询。</p>
+      <p class="sub">查询订单时，请按提示提供订单号或选择订单。退款和工单会先展示确认信息，确认后再提交。</p>
+      <p class="sub">历史对话可在左侧搜索、继续。电脑上按 Enter 发送，Shift + Enter 换行，Ctrl / ⌘ + K 开启新对话。手机上点击左上角菜单查看历史。</p>
+      <div class="modal-actions"><button type="button" class="submit" id="helpClose">开始使用</button></div>
+    </div>
+  </div>
+
+  <!-- ch05:建工单表单弹窗(点「建工单」弹出,选类别+填描述再提交) -->
+  <div class="modal-mask" id="ticketMask">
+    <div class="ticket-modal" role="dialog" aria-modal="true" aria-labelledby="ticketTitle">
+      <h3 id="ticketTitle">创建工单</h3>
+      <p class="sub">小喵会把问题登记成工单跟进处理</p>
+      <div class="ticket-field">
+        <label for="ticketType">反馈类别 <span class="req">*</span></label>
+        <select id="ticketType">
+          <option value="" disabled selected>请选择反馈类别…</option>
+          <option value="售后">售后</option>
+          <option value="投诉">投诉</option>
+          <option value="咨询">咨询</option>
+        </select>
+      </div>
+      <div class="ticket-field">
+        <label for="ticketDesc">反馈描述 <span class="req">*</span></label>
+        <textarea id="ticketDesc" placeholder="请描述您遇到的问题…"></textarea>
+      </div>
+      <div class="ticket-err" id="ticketErr"></div>
+      <div class="modal-actions">
+        <button type="button" class="cancel" id="ticketCancel">取消</button>
+        <button type="button" class="submit" id="ticketSubmit">提交工单</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-mask" id="refundMask">
+    <div class="ticket-modal" role="dialog" aria-modal="true" aria-labelledby="refundTitle">
+      <h3 id="refundTitle">提交退款工单</h3>
+      <p class="sub">确认订单与退款原因后提交,小喵会为您登记退款申请</p>
+      <div class="ticket-field">
+        <label for="refundOrder">订单号</label>
+        <input id="refundOrder" type="text" readonly />
+      </div>
+      <div class="ticket-field">
+        <label for="refundReason">退款原因 <span class="req">*</span></label>
+        <select id="refundReason">
+          <option value="" disabled selected>请选择退款原因…</option>
+          <option value="七天无理由">七天无理由</option>
+          <option value="质量问题">质量问题</option>
+          <option value="发错货">发错货</option>
+          <option value="不想要了">不想要了</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="ticket-err" id="refundErr"></div>
+      <div class="modal-actions">
+        <button type="button" class="cancel" id="refundCancel">取消</button>
+        <button type="button" class="submit" id="refundSubmit">提交退款</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SESSION_KEY = "mewhelp_session_id";      // 稳定用户标识,作 user_id
+    const CONV_KEY = "mewhelp_conversation_id";     // 当前会话 id,由后端 done 帧回传
+    const SUGGESTIONS = [
+      { title: "订单与物流", hint: "查查我的包裹到哪里了", question: "怎么查我的物流进度?", icon: "box" },
+      { title: "退换与售后", hint: "了解退换货政策和申请流程", question: "退换货政策是怎样的?", icon: "return" },
+      { title: "商品选购", hint: "一起找到适合毛孩子的好物", question: "猫粮怎么选?", icon: "bag" },
+      { title: "会员与权益", hint: "看看有哪些专属福利", question: "会员有什么权益?", icon: "gift" },
+    ];
+    const CAT_SVG = '<svg aria-hidden="true" viewBox="0 0 32 32"><use href="#i-cat"/></svg>';
+    const icon = (name) => '<svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-' + name + '"/></svg>';
+    // 点赞/点踩大拇指(矢量填充,fill=currentColor:平时 ink、点亮时随按钮变白)
+    const THUMB_UP_SVG =
+      '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>';
+    const THUMB_DOWN_SVG =
+      '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>';
+    const messagesEl = document.getElementById("messages");
+    const inputEl = document.getElementById("input");
+    const sendBtn = document.getElementById("send");
+    const newChatBtn = document.getElementById("new-chat");
+
+    for (const el of document.querySelectorAll("[data-cat]")) el.innerHTML = CAT_SVG;
+
+    function getUserId() {
+      let id = localStorage.getItem(SESSION_KEY);
+      if (!id) {
+        id = crypto.randomUUID();
+        localStorage.setItem(SESSION_KEY, id);
+      }
+      return id;
+    }
+
+    function getConversationId() {
+      const v = localStorage.getItem(CONV_KEY);
+      return v ? Number(v) : null;
+    }
+    function setConversationId(id) {
+      if (id != null) localStorage.setItem(CONV_KEY, String(id));
+    }
+    function clearConversationId() {
+      localStorage.removeItem(CONV_KEY);
+    }
+
+    function renderEmptyState() {
+      messagesEl.innerHTML = "";
+      const wrap = document.createElement("div");
+      wrap.className = "empty";
+      wrap.innerHTML =
+        '<div class="welcome-tag">YOUR EVERYDAY COMPANION</div>' +
+        '<div class="mascot">' + CAT_SVG + '</div>' +
+        '<h1>你好呀，我是<span>小喵</span></h1>' +
+        '<p>从挑选心仪好物，到解决售后小烦恼。<br>关于你和毛孩子的每一件小事，我都认真对待。</p>' +
+        '<div class="suggestion-heading">' + icon('spark') + '不知道从哪里开始？试试这样问</div>' +
+        '<div class="chips"></div>' +
+        '<div class="welcome-note">' + icon('chat') + '随时提问，按你的节奏慢慢聊</div>';
+      const chips = wrap.querySelector(".chips");
+      for (const s of SUGGESTIONS) {
+        const c = document.createElement("button");
+        c.className = "chip";
+        c.type = "button";
+        c.innerHTML = '<span class="chip-icon">' + icon(s.icon) + '</span><span class="chip-copy"><strong>' + s.title + '</strong><small>' + s.hint + '</small></span><span class="chip-arrow" aria-hidden="true">↗</span>';
+        c.addEventListener("click", () => { if (!isBusy) send(s.question); });
+        chips.appendChild(c);
+      }
+      messagesEl.appendChild(wrap);
+    }
+
+    function clearEmptyState() {
+      const e = messagesEl.querySelector(".empty");
+      if (e) e.remove();
+    }
+
+    function addRow(role) {
+      clearEmptyState();
+      const row = document.createElement("div");
+      row.className = "row " + role;
+      if (role === "bot") {
+        const av = document.createElement("div");
+        av.className = "avatar sm";
+        av.innerHTML = CAT_SVG;
+        row.appendChild(av);
+      }
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      row.appendChild(bubble);
+      messagesEl.appendChild(row);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return bubble;
+    }
+
+    function showTyping(bubble) {
+      bubble.innerHTML = '<span class="typing"><span></span><span></span><span></span></span>';
+    }
+
+    let isBusy = false;
+    function setBusy(busy) {
+      isBusy = busy;
+      sendBtn.disabled = busy;
+      inputEl.disabled = busy;
+      newChatBtn.disabled = busy;
+      messagesEl.setAttribute("aria-busy", String(busy));
+      document.getElementById("activity").textContent = busy ? "小喵正在处理，请稍候…" : "";
+      for (const button of document.querySelectorAll(".conv-item")) button.disabled = busy;
+      if (!busy && window.matchMedia("(min-width: 761px)").matches) inputEl.focus();
+    }
+
+    // ---------- 轻量 markdown 渲染(零依赖,先转义再解析,防注入) ----------
+    function escapeHtml(s) {
+      return s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+    }
+    function renderInline(s) {
+      s = s.replace(/`([^`]+)`/g, (m, c) => "<code>" + c + "</code>");
+      s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+      s = s.replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>");
+      s = s.replace(/~~([^~]+)~~/g, "<del>$1</del>");
+      // 仅允许 http(s) 链接,挡 javascript: 等
+      s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      return s;
+    }
+    function renderMarkdown(md) {
+      const lines = escapeHtml(md).split("\n");
+      const out = [];
+      const isTableSep = (l) => l && l.includes("-") && /^\s*\|?[\s:|-]+\|[\s:|-]*$/.test(l);
+      const splitRow = (l) => l.replace(/^\s*\|/, "").replace(/\|\s*$/, "").split("|").map((c) => c.trim());
+      const isSpecial = (l, next) =>
+        /^```/.test(l) || /^(#{1,6})\s/.test(l) || /^\s*[-*+]\s+/.test(l) ||
+        /^\s*\d+\.\s+/.test(l) || /^\s*(---|\*\*\*|___)\s*$/.test(l) || /^\s*>\s?/.test(l) ||
+        (l.includes("|") && isTableSep(next));
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+        let m;
+        if (/^```/.test(line)) {                                   // 代码块
+          const buf = []; i++;
+          while (i < lines.length && !/^```\s*$/.test(lines[i])) { buf.push(lines[i]); i++; }
+          i++;
+          out.push("<pre><code>" + buf.join("\n") + "</code></pre>"); continue;
+        }
+        if ((m = line.match(/^(#{1,6})\s+(.*)$/))) {               // 标题
+          const n = m[1].length; out.push(`<h${n}>` + renderInline(m[2]) + `</h${n}>`); i++; continue;
+        }
+        if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) { out.push("<hr>"); i++; continue; }  // 分隔线
+        if (line.includes("|") && isTableSep(lines[i + 1])) {      // 表格
+          const headers = splitRow(line); i += 2; const rows = [];
+          while (i < lines.length && lines[i].includes("|") && lines[i].trim() !== "") {
+            rows.push(splitRow(lines[i])); i++;
+          }
+          let t = "<table><thead><tr>" + headers.map((c) => "<th>" + renderInline(c) + "</th>").join("") + "</tr></thead><tbody>";
+          for (const r of rows) t += "<tr>" + r.map((c) => "<td>" + renderInline(c) + "</td>").join("") + "</tr>";
+          out.push(t + "</tbody></table>"); continue;
+        }
+        if (/^\s*[-*+]\s+/.test(line)) {                           // 无序列表
+          const items = [];
+          while (i < lines.length && /^\s*[-*+]\s+/.test(lines[i])) {
+            items.push("<li>" + renderInline(lines[i].replace(/^\s*[-*+]\s+/, "")) + "</li>"); i++;
+          }
+          out.push("<ul>" + items.join("") + "</ul>"); continue;
+        }
+        if (/^\s*\d+\.\s+/.test(line)) {                           // 有序列表
+          const items = [];
+          while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i])) {
+            items.push("<li>" + renderInline(lines[i].replace(/^\s*\d+\.\s+/, "")) + "</li>"); i++;
+          }
+          out.push("<ol>" + items.join("") + "</ol>"); continue;
+        }
+        if (/^\s*>\s?/.test(line)) {                               // 引用
+          const buf = [];
+          while (i < lines.length && /^\s*>\s?/.test(lines[i])) { buf.push(lines[i].replace(/^\s*>\s?/, "")); i++; }
+          out.push("<blockquote>" + buf.map(renderInline).join("<br>") + "</blockquote>"); continue;
+        }
+        if (line.trim() === "") { i++; continue; }                 // 空行
+        const para = [];                                           // 段落
+        while (i < lines.length && lines[i].trim() !== "" && !isSpecial(lines[i], lines[i + 1])) {
+          para.push(lines[i]); i++;
+        }
+        out.push("<p>" + para.map(renderInline).join("<br>") + "</p>");
+      }
+      return out.join("");
+    }
+
+    // ---------- ch04:引用角标 [n] → 可点,弹来源浮层(section_path + 原文) ----------
+    let citePop = null;
+    function ensureCitePop() {
+      if (citePop) return citePop;
+      citePop = document.createElement("div");
+      citePop.className = "cite-pop";
+      citePop.hidden = true;
+      document.body.appendChild(citePop);
+      document.addEventListener("click", (e) => {
+        if (citePop.hidden) return;
+        if (!citePop.contains(e.target) && !e.target.classList.contains("cite")) hideCitePop();
+      });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") hideCitePop(); });
+      window.addEventListener("resize", hideCitePop);
+      return citePop;
+    }
+    function hideCitePop() { if (citePop) citePop.hidden = true; }
+    function showCitePop(sup, c) {
+      const pop = ensureCitePop();
+      pop.innerHTML =
+        '<div class="cite-pop-path">' + escapeHtml(c.section_path || "来源") + "</div>" +
+        (c.question ? '<div class="cite-pop-q">' + escapeHtml(c.question) + "</div>" : "") +
+        '<div class="cite-pop-a">' + escapeHtml(c.answer || "") + "</div>" +
+        '<div class="cite-pop-meta">来源编号 [' + c.n + "]" +
+        (c.content_type ? " · " + escapeHtml(c.content_type) : "") + "</div>";
+      pop.hidden = false;
+      // 定位:角标下方,超出视口右/下边则回收
+      const r = sup.getBoundingClientRect();
+      const pw = Math.min(320, window.innerWidth - 24);
+      pop.style.width = pw + "px";
+      let left = Math.min(r.left, window.innerWidth - pw - 12);
+      let top = r.bottom + 6;
+      if (top + pop.offsetHeight > window.innerHeight - 12) top = Math.max(12, r.top - pop.offsetHeight - 6);
+      pop.style.left = Math.max(12, left) + "px";
+      pop.style.top = top + "px";
+    }
+    function decorateCitations(container, citations) {
+      const byN = new Map(citations.map((c) => [String(c.n), c]));
+      const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+      const targets = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.parentElement.classList.contains("cite")) continue;
+        if (/\[\d+\]/.test(node.nodeValue)) targets.push(node);
+      }
+      for (const textNode of targets) {
+        const frag = document.createDocumentFragment();
+        let last = 0;
+        const re = /\[(\d+)\]/g;
+        let m;
+        while ((m = re.exec(textNode.nodeValue))) {
+          const c = byN.get(m[1]);
+          if (!c) continue;  // 非有效编号,保留原文
+          if (m.index > last) frag.appendChild(document.createTextNode(textNode.nodeValue.slice(last, m.index)));
+          const sup = document.createElement("sup");
+          sup.className = "cite";
+          sup.textContent = "[" + m[1] + "]";
+          sup.title = c.section_path || "查看来源";
+          sup.addEventListener("click", (e) => { e.stopPropagation(); showCitePop(sup, c); });
+          frag.appendChild(sup);
+          last = m.index + m[0].length;
+        }
+        if (last > 0) {
+          if (last < textNode.nodeValue.length) frag.appendChild(document.createTextNode(textNode.nodeValue.slice(last)));
+          textNode.parentNode.replaceChild(frag, textNode);
+        }
+      }
+    }
+
+    // ---------- ch04:每段回答满意度反馈(👍/👎,点一次点亮 + 已反馈,一次性)----------
+    function addFeedbackBar(bubble) {
+      if (bubble.querySelector(".feedback")) return;   // 防重复挂
+      const bar = document.createElement("div");
+      bar.className = "feedback";
+      const up = document.createElement("button");
+      up.type = "button"; up.className = "fb-btn"; up.innerHTML = THUMB_UP_SVG;
+      up.setAttribute("aria-label", "这条回答有帮助");
+      const down = document.createElement("button");
+      down.type = "button"; down.className = "fb-btn"; down.innerHTML = THUMB_DOWN_SVG;
+      down.setAttribute("aria-label", "这条回答没帮助");
+      const done = document.createElement("span");
+      done.className = "fb-done"; done.hidden = true; done.textContent = "已反馈,谢谢~";
+      bar.append(up, down, done);
+      // ch09:向上找这条回答之前最近的用户气泡,把该轮用户原话带给后端(👎 落池要用)
+      function userQuestionBefore() {
+        let row = bubble.closest(".row");
+        while (row && (row = row.previousElementSibling)) {
+          if (row.classList && row.classList.contains("user")) {
+            const b = row.querySelector(".bubble");
+            return (b ? b.textContent : row.textContent).trim();
+          }
+        }
+        return "";
+      }
+      function give(chosen, other) {
+        if (bar.dataset.given) return;   // 一次性,点过不再变
+        bar.dataset.given = "1";
+        chosen.classList.add("active");  // 点亮选中的
+        other.classList.add("dim");      // 另一个淡出
+        up.disabled = true; down.disabled = true;
+        done.hidden = false;             // 显示"已反馈"
+        // ch09:反馈接后端——👎 落低置信度问题池进飞轮,👍 后端只记日志;失败静默,UI 行为不变
+        fetch("/api/feedback", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ conversation_id: getConversationId(),
+                                 rating: chosen === down ? "down" : "up",
+                                 question: userQuestionBefore() }),
+        }).catch(() => {});
+      }
+      up.addEventListener("click", () => give(up, down));
+      down.addEventListener("click", () => give(down, up));
+      bubble.appendChild(bar);
+    }
+
+    // ---------- ch05:actions 帧 - 转人工/建工单两按钮交互 ----------
+    function renderActions(bubble, items) {
+      const bar = document.createElement("div");
+      bar.className = "action-bar";
+      for (const a of items) {
+        if (a.type === "select_order") {
+          // ch08:报了不属于自己的订单号被拒,把他名下的单列出来点选。拒绝之后得给条出路,
+          // 否则用户既查不到,也不知道自己的单号是多少
+          renderOrderCards(bubble, a.orders || [], pickThenAsk);
+          continue;
+        }
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "action-btn";
+        if (a.type === "transfer_human") {
+          btn.textContent = "转人工";
+          btn.addEventListener("click", () => {
+            btn.disabled = true;
+            // 纯前端模拟:显示已转接 + 客服小猫问候(本章不接真人系统)
+            const sys = addRow("bot"); sys.textContent = "已转接人工客服";
+            const greet = addRow("bot");
+            greet.textContent = "您好,我是客服小猫,请问有什么可以帮您的";
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+          });
+        } else if (a.type === "create_ticket") {
+          btn.textContent = "建工单";
+          // 点「建工单」不再直接建单,而是弹出工单表单让用户选类别+填描述再提交
+          btn.addEventListener("click", () => openTicketModal(btn));
+        } else if (a.type === "refund_form") {
+          btn.textContent = "提交退款工单";
+          // ch06:能退时 Agent 调 submit_refund 被拦成此动作,点开退款表单(订单号只读+原因下拉)
+          btn.addEventListener("click", () => openRefundModal(btn, a.draft || {}));
+        }
+        bar.appendChild(btn);
+      }
+      if (bar.children.length) bubble.appendChild(bar);   // 只有订单卡时不留一条空按钮栏
+    }
+
+    // ---------- ch05:建工单表单弹窗控制 ----------
+    const ticketMask = document.getElementById("ticketMask");
+    const ticketType = document.getElementById("ticketType");
+    const ticketDesc = document.getElementById("ticketDesc");
+    const ticketErr = document.getElementById("ticketErr");
+    const ticketSubmit = document.getElementById("ticketSubmit");
+    const ticketCancel = document.getElementById("ticketCancel");
+    let ticketTriggerBtn = null;  // 记住是哪个「建工单」按钮触发的,成功后置灰它
+
+    function openTicketModal(triggerBtn) {
+      ticketTriggerBtn = triggerBtn;
+      ticketType.value = "";          // 不预选,强制用户选
+      ticketDesc.value = "";          // 留空,用户自己写
+      ticketErr.textContent = "";
+      ticketSubmit.disabled = false;
+      ticketSubmit.textContent = "提交工单";
+      ticketMask.classList.add("open");
+      ticketDesc.focus();
+    }
+    function closeTicketModal() {
+      ticketMask.classList.remove("open");
+      ticketTriggerBtn = null;
+    }
+
+    ticketCancel.addEventListener("click", closeTicketModal);
+    // 点遮罩空白处 / Esc 关闭(取消不建单,建工单按钮保持可用可重开)
+    ticketMask.addEventListener("click", (e) => { if (e.target === ticketMask) closeTicketModal(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && ticketMask.classList.contains("open")) closeTicketModal();
+    });
+
+    ticketSubmit.addEventListener("click", async () => {
+      const type = ticketType.value;
+      const desc = ticketDesc.value.trim();
+      if (!type) { ticketErr.textContent = "请选择反馈类别"; return; }
+      if (!desc) { ticketErr.textContent = "请填写反馈描述"; ticketDesc.focus(); return; }
+      ticketErr.textContent = "";
+      ticketSubmit.disabled = true;
+      ticketSubmit.textContent = "提交中…";
+      try {
+        const resp = await fetch("/api/actions/create-ticket", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            conversation_id: getConversationId(),
+            description: desc,
+            ticket_type: type,
+          }),
+        });
+        const data = await resp.json();
+        if (resp.ok) {
+          if (ticketTriggerBtn) ticketTriggerBtn.disabled = true;  // 建成后该气泡的按钮置灰
+          closeTicketModal();
+          addRow("bot").textContent = "工单已创建:" + data.ticket_no;
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        } else {
+          ticketErr.textContent = "工单创建失败,请稍后重试";
+          ticketSubmit.disabled = false;
+          ticketSubmit.textContent = "提交工单";
+        }
+      } catch (e) {
+        ticketErr.textContent = "工单创建失败,请稍后重试";
+        ticketSubmit.disabled = false;
+        ticketSubmit.textContent = "提交工单";
+      }
+    });
+
+    // ---------- ch06:退款表单弹窗控制(订单号只读 + 固定类目原因下拉)----------
+    const refundMask = document.getElementById("refundMask");
+    const refundOrder = document.getElementById("refundOrder");
+    const refundReason = document.getElementById("refundReason");
+    const refundErr = document.getElementById("refundErr");
+    const refundSubmit = document.getElementById("refundSubmit");
+    const refundCancel = document.getElementById("refundCancel");
+    let refundTriggerBtn = null;
+
+    function openRefundModal(triggerBtn, draft) {
+      refundTriggerBtn = triggerBtn;
+      refundOrder.value = (draft && draft.order_id) || "";
+      refundReason.value = "";
+      refundErr.textContent = "";
+      refundSubmit.disabled = false;
+      refundSubmit.textContent = "提交退款";
+      refundMask.classList.add("open");
+    }
+    function closeRefundModal() { refundMask.classList.remove("open"); refundTriggerBtn = null; }
+    refundCancel.addEventListener("click", closeRefundModal);
+    refundMask.addEventListener("click", (e) => { if (e.target === refundMask) closeRefundModal(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && refundMask.classList.contains("open")) closeRefundModal();
+    });
+    refundSubmit.addEventListener("click", async () => {
+      const reason = refundReason.value;
+      if (!reason) { refundErr.textContent = "请选择退款原因"; return; }
+      refundErr.textContent = "";
+      refundSubmit.disabled = true;
+      refundSubmit.textContent = "提交中…";
+      try {
+        const resp = await fetch("/api/actions/create-refund", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ conversation_id: getConversationId(),
+            order_id: refundOrder.value, reason }),
+        });
+        const data = await resp.json();
+        if (resp.ok) {
+          if (refundTriggerBtn) refundTriggerBtn.disabled = true;
+          closeRefundModal();
+          addRow("bot").textContent = "退款申请已提交:" + data.ticket_no;
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        } else {
+          refundErr.textContent = "退款提交失败,请稍后重试";
+          refundSubmit.disabled = false;
+          refundSubmit.textContent = "提交退款";
+        }
+      } catch (e) {
+        refundErr.textContent = "退款提交失败,请稍后重试";
+        refundSubmit.disabled = false;
+        refundSubmit.textContent = "提交退款";
+      }
+    });
+
+    // ---------- ch06:订单选择器卡片(interrupt 缺订单号 → 聊天流点选 → resume 续跑)----------
+    // onPick 决定点完卡片干什么:ch06 是 resume 把图续跑下去;ch08 归属校验拒绝之后
+    // 没有待续跑的图,点了就当用户重新问一句(见 pickThenAsk)。卡片长相只此一份。
+    function renderOrderCards(bubble, orders, onPick) {
+      const intro = document.createElement("div");
+      intro.className = "bubble-text";
+      intro.textContent = orders.length ? "请选择您要处理的订单:" : "没有查到可选订单,请直接提供订单号。";
+      bubble.appendChild(intro);
+      const wrap = document.createElement("div");
+      wrap.className = "order-cards";
+      for (const o of orders) {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "order-card";
+        card.innerHTML =
+          '<div class="oc-top">订单 ' + o.order_id + '</div>' +
+          '<div class="oc-mid">' + (o.product || "") + '</div>' +
+          '<div class="oc-bot">' + (o.status || "") + ' · ¥' + (o.amount ?? "") + '</div>';
+        card.addEventListener("click", async () => {
+          wrap.querySelectorAll(".order-card").forEach((c) => (c.disabled = true));
+          card.classList.add("picked");
+          await (onPick || pickThenResume)(o);
+        });
+        wrap.appendChild(card);
+      }
+      bubble.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    // ch06:点完续跑图(有 interrupt 挂着)
+    async function pickThenResume(o) {
+      addRow("user").textContent = "选择订单 " + o.order_id;
+      const nb = addRow("bot");
+      setBusy(true);
+      try {
+        await streamInto(nb, () => fetch("/api/actions/resume", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ conversation_id: getConversationId(), order_id: o.order_id }),
+        }));
+      } catch (e) {
+        nb.className = "bubble error";
+        nb.textContent = "续跑失败,请稍后重试";
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    // ch08:归属校验拒绝之后给的出路。这轮已经答完了,没有图等着续跑,所以走正常发消息那条路
+    async function pickThenAsk(o) {
+      await send("查一下订单 " + o.order_id);
+    }
+
+    // ---------- ch08:工单预览确认卡(interrupt confirm_ticket → 确认提交/取消 → resume 续跑)----------
+    function renderTicketConfirm(bubble, preview) {
+      const intro = document.createElement("div");
+      intro.className = "bubble-text";
+      intro.textContent = "请确认工单信息:";
+      bubble.appendChild(intro);
+      const card = document.createElement("div");
+      card.className = "ticket-confirm";
+      card.innerHTML =
+        '<div class="tc-title">📋 工单预览</div>' +
+        '<div class="tc-row"><span class="tc-label">工单类型</span><span>' + escapeHtml(preview.ticket_type || "咨询") + "</span></div>" +
+        '<div class="tc-row"><span class="tc-label">问题描述</span><span>' + escapeHtml(preview.description || "") + "</span></div>";
+      const btns = document.createElement("div");
+      btns.className = "tc-btns";
+      const mk = (text, confirmed, extraClass) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "action-btn" + (extraClass ? " " + extraClass : "");
+        btn.textContent = text;
+        btn.addEventListener("click", async () => {
+          btns.querySelectorAll("button").forEach((b) => (b.disabled = true));
+          card.classList.add("decided");
+          addRow("user").textContent = confirmed ? "确认提交工单" : "取消建单";
+          const nb = addRow("bot");
+          setBusy(true);
+          try {
+            await streamInto(nb, () => fetch("/api/actions/resume", {
+              method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ conversation_id: getConversationId(), confirmed }),
+            }));
+          } catch (e) {
+            nb.className = "bubble error";
+            nb.textContent = "续跑失败,请稍后重试";
+          } finally {
+            setBusy(false);
+          }
+        });
+        return btn;
+      };
+      btns.appendChild(mk("确认提交", true));
+      btns.appendChild(mk("取消", false, "tc-cancel"));
+      card.appendChild(btns);
+      bubble.appendChild(card);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    // 读一条 SSE 流,按帧分发到 on.{delta,tool,citations,actions,interrupt};done 存 conversation_id;event: error 抛错
+    async function readSSEStream(resp, on) {
+      if (!resp.ok || !resp.body) throw new Error("bad response");
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const frames = buffer.split("\n\n");
+        buffer = frames.pop() ?? "";
+        for (const frame of frames) {
+          if (frame.startsWith("event: error")) throw new Error("stream error");
+          const line = frame.split("\n").find((l) => l.startsWith("data: "));
+          if (!line) continue;
+          const payload = line.slice(6);
+          if (payload === "[DONE]") return;
+          const data = JSON.parse(payload);
+          if (data.event === "tool") on.tool && on.tool(data.name);
+          else if (data.event === "citations") on.citations && on.citations(data.items || []);
+          else if (data.event === "interrupt") {
+            if (data.conversation_id) setConversationId(data.conversation_id);  // 中断无 done 帧,靠这里记会话号供续跑
+            on.interrupt && on.interrupt(data);
+          }
+          else if (data.event === "actions") on.actions && on.actions(data.items || []);
+          else if (data.event === "done") setConversationId(data.conversation_id);
+          else if (data.delta !== undefined) on.delta && on.delta(data.delta);
+        }
+      }
+    }
+
+    // 把一次 SSE 流(/api/chat 首轮 或 /api/actions/resume 续跑)渲染进 bubble;
+    // 遇 interrupt 按 kind 分发:select_order 渲染订单卡点选,confirm_ticket 渲染工单预览卡
+    // (确认提交/取消),两者都在用户操作后开新气泡续跑。
+    async function streamInto(bubble, doFetch) {
+      showTyping(bubble);
+      let structured = false, textStarted = false, interrupted = false, raw = "";
+      let badgesEl = null, textEl = null, citations = [], actions = [];
+      function ensureStructure() {
+        if (structured) return;
+        bubble.innerHTML = "";
+        badgesEl = document.createElement("div");
+        badgesEl.className = "tool-badges";
+        textEl = document.createElement("div");
+        textEl.className = "bubble-text";
+        bubble.appendChild(badgesEl);
+        bubble.appendChild(textEl);
+        showTyping(textEl);
+        structured = true;
+      }
+      const resp = await doFetch();
+      await readSSEStream(resp, {
+        delta: (delta) => {
+          ensureStructure();
+          if (!textStarted) { textEl.innerHTML = ""; textStarted = true; }
+          raw += delta;
+          textEl.innerHTML = renderMarkdown(raw);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        },
+        tool: (toolName) => {
+          ensureStructure();
+          const b = document.createElement("div");
+          b.className = "tool-badge";
+          b.textContent = "🔧 调用了 " + toolName;
+          badgesEl.appendChild(b);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        },
+        citations: (items) => { citations = items; },
+        actions: (items) => { actions = items; },
+        interrupt: (data) => {
+          interrupted = true;
+          if (!structured) { bubble.innerHTML = ""; structured = true; }
+          // ch08:中断按 kind 分发——select_order 弹订单卡,confirm_ticket 弹工单预览卡
+          if (data.kind === "confirm_ticket") renderTicketConfirm(bubble, data.preview || {});
+          else renderOrderCards(bubble, data.orders || []);
+        },
+      });
+      if (interrupted) return;
+      if (!textStarted) { ensureStructure(); textEl.innerHTML = ""; textEl.textContent = "(无回复)"; }
+      if (textStarted && citations.length) decorateCitations(textEl, citations);
+      if (actions.length) renderActions(bubble, actions);
+      if (textStarted) addFeedbackBar(bubble);
+    }
+
+    async function send(preset) {
+      const message = (preset ?? inputEl.value).trim();
+      if (!message || isBusy) return;
+      inputEl.value = "";
+      autoGrow();
+      addRow("user").textContent = message;
+      setBusy(true);
+      const bubble = addRow("bot");
+      try {
+        await streamInto(bubble, () => fetch("/api/chat", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: getUserId(), message, conversation_id: getConversationId() }),
+        }));
+      } catch (err) {
+        bubble.className = "bubble error";
+        bubble.textContent = "暂时没有收到回复，请稍后重试。";
+        const retry = document.createElement("button");
+        retry.type = "button";
+        retry.className = "retry-button";
+        retry.textContent = "重新编辑问题";
+        retry.addEventListener("click", () => {
+          if (isBusy) return;
+          inputEl.value = message;
+          autoGrow();
+          inputEl.focus();
+        });
+        bubble.appendChild(document.createElement("br"));
+        bubble.appendChild(retry);
+      } finally {
+        setBusy(false);
+        loadConversations();   // ch07:每轮后刷新侧栏(新会话入列/摘要标记更新)
+      }
+    }
+
+    // ---------- ch07:会话侧栏(列表 / 切换 / 历史回载) ----------
+    const convListEl = document.getElementById("conv-list");
+
+    let conversationItems = [];
+    let listRequest = 0;
+    async function loadConversations() {
+      const request = ++listRequest;
+      try {
+        const r = await fetch("/api/conversations?user_id=" + encodeURIComponent(getUserId()));
+        if (!r.ok) throw new Error("history unavailable");
+        const data = await r.json();
+        if (request !== listRequest) return;
+        conversationItems = data.items || [];
+        renderConvList(conversationItems);
+      } catch (e) {
+        if (request !== listRequest) return;
+        convListEl.innerHTML = '<div class="sb-empty">暂时无法加载历史对话<br><button type="button" class="retry-button">重新加载</button></div>';
+        convListEl.querySelector("button").addEventListener("click", loadConversations);
+      }
+    }
+
+    function renderConvList(items) {
+      convListEl.innerHTML = "";
+      document.getElementById("conv-count").textContent = items.length;
+      const query = document.getElementById("conv-search").value.trim().toLowerCase();
+      const visible = items.filter((item) => (String(item.id) + " " + (item.preview || "")).toLowerCase().includes(query));
+      if (!visible.length) {
+        const d = document.createElement("div");
+        d.className = "sb-empty";
+        d.innerHTML = icon("chat");
+        d.appendChild(document.createTextNode(query ? "没有找到相关对话，试试其他关键词" : "还没有历史对话，和小喵打个招呼吧"));
+        convListEl.appendChild(d);
+        return;
+      }
+      const current = getConversationId();
+      for (const it of visible) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "conv-item" + (it.id === current ? " active" : "");
+        b.disabled = isBusy;
+        if (it.id === current) b.setAttribute("aria-current", "true");
+        const title = document.createElement("div");
+        title.className = "ci-top";
+        title.textContent = it.preview || "新的对话";
+        b.title = title.textContent;
+        const detail = document.createElement("div");
+        detail.className = "ci-preview";
+        detail.textContent = "对话 #" + it.id + (it.has_summary ? " · 已整理摘要" : " · 点击继续咨询");
+        b.append(title, detail);
+        b.addEventListener("click", () => { if (!isBusy) { closeSidebar(); switchConversation(it.id); } });
+        convListEl.appendChild(b);
+      }
+    }
+    document.getElementById("conv-search").addEventListener("input", () => renderConvList(conversationItems));
+
+    // 历史回载时补挂按钮:suggested_actions 不落库,但这两句话术是固定文案,
+    // 且转人工/建工单按钮不依赖当轮上下文(转人工纯前端模拟,建工单表单用户现填),
+    // 按文案精确匹配重建即可。话术改了这里要跟着改(单一来源在后端 prompts.py)。
+    const REPLAY_ACTIONS = [
+      { text: "抱歉,这个问题我暂时没有查到确切信息,不敢乱答。建议您联系人工客服进一步确认,以免给您错误的指引。",
+        actions: [{ type: "transfer_human" }] },
+      { text: "非常抱歉给您带来了不好的体验,我理解您的心情。您可以选择转接人工客服,或让我为您登记一张工单跟进处理。",
+        actions: [{ type: "transfer_human" }, { type: "create_ticket", draft: {} }] },
+    ];
+
+    async function switchConversation(cid) {
+      // 已是当前会话且聊天区有内容才跳过;页面刚刷新时聊天区是空的,点当前会话也要回载
+      if (cid === getConversationId() && messagesEl.querySelector(".row")) return;
+      if (isBusy) return;
+      setBusy(true);
+      try {
+        const r = await fetch("/api/conversations/" + cid + "/messages");
+        if (!r.ok) throw new Error("history unavailable");
+        const history = (await r.json()).items || [];
+        setConversationId(cid);
+        messagesEl.innerHTML = "";
+        {
+          for (const m of history) {
+            if (!m.content) continue;
+            if (m.role === "user") {
+              addRow("user").textContent = m.content;
+            } else {
+              const bubble = addRow("bot");
+              const textEl = document.createElement("div");
+              textEl.className = "bubble-text";
+              textEl.innerHTML = renderMarkdown(m.content);
+              bubble.appendChild(textEl);
+              const hit = REPLAY_ACTIONS.find((ra) => m.content.trim() === ra.text);
+              if (hit) renderActions(bubble, hit.actions);
+              addFeedbackBar(bubble);   // 反馈条(👍/👎)回载也要有,和直播轮一致
+            }
+          }
+        }
+        if (!messagesEl.children.length) renderEmptyState();
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        loadConversations();
+      } catch (e) {
+        setBusy(false);
+        document.getElementById("activity").textContent = "历史对话加载失败，请在侧栏重新选择。";
+        return;
+      }
+      setBusy(false);
+    }
+
+    function autoGrow() {
+      inputEl.style.height = "auto";
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 128) + "px";
+    }
+
+    sendBtn.addEventListener("click", () => send());
+    inputEl.addEventListener("input", autoGrow);
+    inputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey && !e.isComposing && e.keyCode !== 229) {
+        e.preventDefault();
+        send();
+      }
+    });
+    newChatBtn.addEventListener("click", () => {
+      if (isBusy) return;
+      closeSidebar();
+      document.getElementById("activity").textContent = "";
+      inputEl.value = "";
+      autoGrow();
+      clearConversationId();          // 开新会话:丢弃当前 conversation_id(旧会话仍在侧栏可切回)
+      renderEmptyState();
+      loadConversations();            // 清 active 高亮
+      inputEl.focus();
+    });
+
+    const appEl = document.querySelector(".app");
+    const sidebarEl = document.getElementById("sidebar");
+    const menuToggle = document.getElementById("menu-toggle");
+    const mainEl = document.querySelector("main");
+    function closeSidebar() {
+      const wasOpen = appEl.classList.contains("sidebar-open");
+      appEl.classList.remove("sidebar-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      mainEl.inert = false;
+      if (wasOpen) menuToggle.focus();
+    }
+    menuToggle.addEventListener("click", () => {
+      appEl.classList.add("sidebar-open");
+      menuToggle.setAttribute("aria-expanded", "true");
+      mainEl.inert = true;
+      document.getElementById("sidebar-close").focus();
+    });
+    document.getElementById("sidebar-close").addEventListener("click", closeSidebar);
+    document.querySelector(".sidebar-backdrop").addEventListener("click", closeSidebar);
+    window.matchMedia("(min-width: 761px)").addEventListener("change", closeSidebar);
+
+    const helpMask = document.getElementById("helpMask");
+    let helpTrigger = null;
+    function closeHelp() {
+      helpMask.classList.remove("open");
+      if (helpTrigger) helpTrigger.focus();
+    }
+    for (const button of document.querySelectorAll("[data-help]")) {
+      button.addEventListener("click", () => {
+        helpTrigger = button;
+        helpMask.classList.add("open");
+        document.getElementById("helpClose").focus();
+      });
+    }
+    document.getElementById("helpClose").addEventListener("click", closeHelp);
+    helpMask.addEventListener("click", (e) => { if (e.target === helpMask) closeHelp(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (helpMask.classList.contains("open")) closeHelp();
+        else closeSidebar();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k" && !document.querySelector(".modal-mask.open")) {
+        e.preventDefault();
+        if (!isBusy) newChatBtn.click();
+      }
+      if (e.key === "Tab") {
+        const modal = document.querySelector(".modal-mask.open");
+        const scope = modal || (appEl.classList.contains("sidebar-open") ? sidebarEl : null);
+        if (!scope) return;
+        const focusable = [...scope.querySelectorAll('button:not(:disabled), a[href], input:not(:disabled), textarea:not(:disabled), select:not(:disabled)')].filter((el) => el.getClientRects().length);
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (!first) return;
+        if (!scope.contains(document.activeElement) || (e.shiftKey && document.activeElement === first)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    getUserId();
+    renderEmptyState();
+    loadConversations();
+    const savedConversation = getConversationId();
+    if (savedConversation) switchConversation(savedConversation);
+    else if (window.matchMedia("(min-width: 761px)").matches) inputEl.focus();
+  </script>
+</body>
+</html>
