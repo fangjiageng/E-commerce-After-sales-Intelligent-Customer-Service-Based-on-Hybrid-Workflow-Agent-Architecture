@@ -1,11 +1,10 @@
-# MewHelp — 电商智能客服 Agent
+# 电商智能客服系统
+面向电商售后场景的智能客服，涵盖LangChain，LangGraph，RAG，数据飞轮，模型微调，Langfuse可观测，Milvus等Agent开发常用技术
 
 **运行方法：**
 docker拉起环境后，执行命令：make dev
 
 一个能查订单物流、答政策 FAQ、走退款子流程、挖知识补库、还能微调一个主题分类器的完整客服系统。
-
-
 
 ## 技术栈
 
