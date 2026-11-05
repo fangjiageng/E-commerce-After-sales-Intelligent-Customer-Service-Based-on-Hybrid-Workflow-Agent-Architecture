@@ -1,8 +1,4 @@
-# 来源：公众号@小林coding
-# 后端八股网站：xiaolincoding.com
-# Agent网站：xiaolinnote.com
-# 简历模版：jianli.xiaolinnote.com
-"""ch09 数据飞轮流水线:问题标准化 + 查重(模型一次输出,README 形状)→ 待审队列。
+"""数据飞轮流水线:问题标准化 + 查重(模型一次输出,README 形状)→ 待审队列。
 
 批处理语义(用户拍板:定时批处理,不做近实时):
 - 游标 = low_confidence_questions.matched_review_id IS NULL,处理完回写,天然幂等可重跑;

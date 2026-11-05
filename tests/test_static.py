@@ -39,5 +39,8 @@ def test_admin_pages_are_reachable():
         assert resp.status_code == 200, path
         assert marker in resp.text, path
         assert "/static/admin.js" in resp.text, path    # 后台导航一份共用
-    for asset in ("/static/admin.js", "/static/acceptance.js", "/static/acceptance.css"):
+    for asset in (
+        "/static/admin.js", "/static/acceptance.js", "/static/acceptance.css",
+        "/static/admin.css", "/static/theme.css", "/static/chat.css", "/static/favicon.svg",
+    ):
         assert client.get(asset).status_code == 200, asset

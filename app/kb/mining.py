@@ -1,7 +1,4 @@
-# 来源：公众号@小林coding
-# 后端八股网站：xiaolincoding.com
-# Agent网站：xiaolinnote.com
-# 简历模版：jianli.xiaolinnote.com
+# 客服跟用户来回聊的内容里藏着不少可复用的问答，本文件就是把它们抽出来
 import logging
 from datetime import datetime
 
@@ -22,9 +19,11 @@ class QaPair(BaseModel):
 
 class QaExtraction(BaseModel):
     """LLM 结构化输出 schema:用两个并列标量数组一一对应。
-    实测 glm-5.2 的 anthropic 兼容上游对嵌套对象数组(list[对象])的工具 schema 会 502,
-    标量 list[str] 正常,故不用 list[QaPair],改并列数组规避。"""
-
+    按直觉这里应该写list[QaPair]，一个问题配一个答案，结构清清楚楚，
+    但实测 glm-5.2 的 anthropic 兼容上游对嵌套对象数组(list[对象])的工具 schema 会 502,
+    标量 list[str] 正常,故不用 list[QaPair],改并列数组规避。
+    这么做的代价是两个数组的对齐关系得自己维护。
+    """
     questions: list[str] = Field(
         default_factory=list, description="问法列表,与 answers 一一对应;无可复用问答则为空"
     )
@@ -39,6 +38,7 @@ async def extract_qa(conversation_texts: list[str], model=None) -> list[QaPair]:
     result: QaExtraction = await chain.ainvoke(
         {"conversations": "\n---\n".join(conversation_texts)}
     )
+    # 解析 LLM 输出的并列数组成 questions和answers。如果模型偶发输出不对齐,按较短对齐,记警告。
     qs, ans = result.questions, result.answers
     if len(qs) != len(ans):
         # 并列数组本应一一对应;长度不一致(模型偶发)按较短对齐,记警告不静默错位

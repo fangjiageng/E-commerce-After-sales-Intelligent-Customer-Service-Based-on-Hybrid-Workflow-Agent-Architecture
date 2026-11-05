@@ -1,0 +1,112 @@
+[
+  {
+    "path": "/admin",
+    "title": "后台管理",
+    "errors": [],
+    "nav": 7,
+    "active": "/admin",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/kb",
+    "title": "知识库录入",
+    "errors": [],
+    "nav": 7,
+    "active": "/kb",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/review",
+    "title": "飞轮待审队列",
+    "errors": [],
+    "nav": 7,
+    "active": "/review",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/observability",
+    "title": "观测与成本",
+    "errors": [],
+    "nav": 7,
+    "active": "/observability",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/topics",
+    "title": "主题分布",
+    "errors": [],
+    "nav": 7,
+    "active": "/topics",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/acceptance",
+    "title": "分类器验收总览",
+    "errors": [],
+    "nav": 7,
+    "active": "/acceptance",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/acceptance/eval",
+    "title": "分类器评测详情",
+    "errors": [],
+    "nav": 7,
+    "active": "/acceptance",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/acceptance/data",
+    "title": "分类器数据产物",
+    "errors": [],
+    "nav": 7,
+    "active": "/acceptance",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/acceptance/errors",
+    "title": "分类器错例复核",
+    "errors": [],
+    "nav": 7,
+    "active": "/acceptance",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/topics/questions?label=物流查询",
+    "title": "物流查询",
+    "errors": [],
+    "nav": 7,
+    "active": "/topics",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  },
+  {
+    "path": "/rag-eval",
+    "title": "RAG 评估",
+    "errors": [],
+    "nav": 7,
+    "active": "/rag-eval",
+    "overflow": false,
+    "background": "rgb(251, 252, 249)",
+    "missing": []
+  }
+]

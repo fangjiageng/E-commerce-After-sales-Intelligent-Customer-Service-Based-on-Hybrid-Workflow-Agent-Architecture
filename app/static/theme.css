@@ -1,0 +1,29 @@
+/* Shared visual tokens for the customer chat and the management workspace. */
+:root {
+  color-scheme: light;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --ink: #253c35;
+  --muted: #68786f;
+  --fur: #e6eee6;
+  --coral: #356652;
+  --cream: #fbfcf9;
+  --paper: #fff;
+  --line: #e4e9e1;
+  --sidebar: #f1f4ed;
+  --online: #4a8762;
+  --error: #b84444;
+  --sky: #648da3;
+  --violet: #9281ad;
+  --success-bg: #edf5eb;
+  --danger-bg: #fcf0ef;
+  --warning-bg: #f8f2e5;
+  --warning-ink: #896827;
+  --info-bg: #edf3f7;
+  --shadow: 0 4px 18px #23382c06;
+  --shadow-sm: none;
+  --shadow-lg: 0 20px 80px #23382c18;
+  --s1: #648da3;
+  --s2: #6e9671;
+  --s3: #a98aab;
+  --s4: #b29b65;
+}

@@ -28,6 +28,7 @@ def _batches(items: list, size: int):
 
 
 async def vectorize_pending(client=None, batch_size: int = 64, collection: str = milvus_client.COLLECTION) -> int:
+    # 该函数的作用是：将category、questions、answer换行拼起来，别的字段不进向量，它们是溯源和过滤用的元数据
     """幂等可重跑:取 pending → 拼 category+questions+answer → 嵌入 + BM25 text → Milvus upsert(PK=id)
     → 回填 vector_id、status=done。
     ch09:client 缺省时在 Milvus 专用线程内惰性创建,upsert/flush 也走 acall——
@@ -51,6 +52,8 @@ async def vectorize_pending(client=None, batch_size: int = 64, collection: str =
             milvus_client.ensure_collection(c, collection=collection)
             milvus_client.upsert_vectors(c, rows, collection=collection)
         await milvus_client.acall(work_upsert)
+        # 幂等就成立在下面这两句。upsert按MySQL的id覆盖同一条向量，回填之后状态变done，下次list_pending_chunks就取不到它了
+        # 跑到一半断电也不怕，已经处理完的那几批是done，重跑从剩下的接着做，不会重复也不会漏
         for r in batch:
             await repository.mark_chunk_vectorized(r.id, str(r.id))
         done += len(batch)

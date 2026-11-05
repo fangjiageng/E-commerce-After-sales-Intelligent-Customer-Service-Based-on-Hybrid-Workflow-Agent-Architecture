@@ -1,71 +1,36 @@
 <!doctype html>
-<!--
-  来源：公众号@小林coding
-  后端八股网站：xiaolincoding.com
-  Agent网站：xiaolinnote.com
-  简历模版：jianli.xiaolinnote.com
--->
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>喵喵优选 · 主题分布</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='2' y='2' width='4' height='4' fill='%232b2632'/><rect x='10' y='2' width='4' height='4' fill='%232b2632'/><rect x='2' y='4' width='12' height='9' fill='%232b2632'/><rect x='3' y='3' width='2' height='3' fill='%23ff9f57'/><rect x='11' y='3' width='2' height='3' fill='%23ff9f57'/><rect x='3' y='5' width='10' height='7' fill='%23ff9f57'/><rect x='5' y='7' width='1' height='2' fill='%232b2632'/><rect x='10' y='7' width='1' height='2' fill='%232b2632'/><rect x='7' y='9' width='2' height='1' fill='%23ff8095'/></svg>" />
-  <style>
-    :root {
-      --ink: #2b2632;
-      --fur: #ff9f57;
-      --coral: #ff7a59;
-      --cream: #fff6e6;
-      --paper: #fffaf0;
-      --muted: #9b8f86;
-      --error: #d6455a;
-      --online: #5fcf6a;
-      --shadow: 4px 4px 0 var(--ink);
-      --shadow-sm: 3px 3px 0 var(--ink);
-      --shadow-lg: 8px 8px 0 var(--ink);
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
-    body {
-      font-family: ui-monospace, "SF Mono", "Cascadia Mono", Consolas,
-        "PingFang SC", "Microsoft YaHei", monospace;
-      color: var(--ink);
-      background-color: #f7d9a8;
-      background-image:
-        linear-gradient(rgba(43,38,50,0.05) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(43,38,50,0.05) 2px, transparent 2px);
-      background-size: 24px 24px;
-      padding: 24px 16px 64px;
-    }
-    .wrap { max-width: 1080px; margin: 0 auto; }
-
-    .topbar {
-      background: var(--cream); border: 4px solid var(--ink); box-shadow: var(--shadow-lg);
+  <title>MewHelp · 主题分布</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+  <style>    .topbar {
+      background: var(--cream); border: 1px solid var(--line); box-shadow: var(--shadow-lg);
       padding: 14px 18px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
     }
     .topbar h1 { font-size: 18px; margin: 0; letter-spacing: 1px; }
     .topbar .sub { color: var(--muted); font-size: 12px; }
     .spacer { flex: 1; }
     .btn {
-      font: inherit; cursor: pointer; border: 3px solid var(--ink); background: var(--paper);
+      font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--paper);
       padding: 6px 14px; box-shadow: var(--shadow-sm); font-weight: 700;
     }
-    .btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+    .btn:active { transform: translate(2px,2px); box-shadow: none; }
 
     /* 统计条 */
     .stats {
       margin-top: 16px; display: flex; gap: 14px; flex-wrap: wrap;
     }
     .stat {
-      background: var(--paper); border: 3px solid var(--ink); box-shadow: var(--shadow-sm);
+      background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow-sm);
       padding: 10px 16px; font-size: 13px;
     }
     .stat b { font-size: 20px; display: block; }
 
     /* 分布条形图 */
     .chart {
-      margin-top: 16px; background: var(--cream); border: 4px solid var(--ink);
+      margin-top: 16px; background: var(--cream); border: 1px solid var(--line);
       box-shadow: var(--shadow); padding: 16px 18px;
     }
     .chart h2 { font-size: 14px; margin: 0 0 12px; }
@@ -81,12 +46,12 @@
     .row.zero .name a { border-bottom-color: var(--muted); }
     .samples .all {
       display: inline-block; margin-top: 7px; font-size: 12px; text-decoration: none;
-      color: var(--ink); border: 3px solid var(--ink); background: var(--cream);
-      padding: 2px 9px; box-shadow: 2px 2px 0 var(--ink); font-weight: 700;
+      color: var(--ink); border: 1px solid var(--line); background: var(--cream);
+      padding: 2px 9px; box-shadow: none; font-weight: 700;
     }
-    .row .track { flex: 1; background: var(--paper); border: 2px solid var(--ink); height: 22px; position: relative; }
+    .row .track { flex: 1; background: var(--paper); border: 1px solid var(--line); height: 22px; position: relative; }
     .row .bar {
-      display: block; height: 100%; background: var(--fur); border-right: 2px solid var(--ink);
+      display: block; height: 100%; background: var(--fur); border-right: 1px solid var(--line);
       min-width: 2px; transition: width .4s;
     }
     .row.zero .bar { display: none; }
@@ -97,7 +62,7 @@
     .row.top1 .bar { background: var(--coral); }
     .samples {
       margin: 6px 0 10px calc(6.5em + 10px); font-size: 12.5px; color: var(--ink);
-      background: var(--paper); border: 2px dashed var(--ink); padding: 8px 12px;
+      background: var(--paper); border: 1px dashed var(--line); padding: 8px 12px;
     }
     .samples div { margin: 2px 0; }
     .samples .none { color: var(--muted); }
@@ -107,8 +72,10 @@
       color: var(--error); padding: 10px 14px; font-size: 13px; display: none;
     }
   </style>
+  <link rel="stylesheet" href="/static/admin.css" />
+  <meta name="theme-color" content="#356652" />
 </head>
-<body>
+<body class="mh-admin">
   <div class="wrap">
     <div class="topbar">
       <h1>主题分布</h1>

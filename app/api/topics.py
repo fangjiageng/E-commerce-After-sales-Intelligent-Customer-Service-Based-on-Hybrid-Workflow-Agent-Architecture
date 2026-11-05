@@ -1,8 +1,4 @@
-# 来源：公众号@小林coding
-# 后端八股网站：xiaolincoding.com
-# Agent网站：xiaolinnote.com
-# 简历模版：jianli.xiaolinnote.com
-"""ch10 主题分布 API:飞轮后台看各类目问题量,决定先补哪块知识。只读。
+"""主题分布 API:飞轮后台看各类目问题量,决定先补哪块知识。只读。
 
 分布只给每类三条样例(一眼看出这类装的是什么);要看全,点类目名进问题列表,
 那边按类目分页列出全部归类结果——同一批 topic_classifications,两种粒度。

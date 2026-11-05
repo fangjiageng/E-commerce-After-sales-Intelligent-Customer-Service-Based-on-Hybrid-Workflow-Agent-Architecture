@@ -1,12 +1,7 @@
-:root {
-  --ink: #253c35; --fur: #e6eee6; --coral: #356652; --cream: #fbfcf9;
-  --paper: #fff; --muted: #718078; --error: #b84444; --online: #4a8762;
-  --line: #e4e9e1; --shadow: 0 4px 18px #23382c06;
-  --shadow-sm: none; --shadow-lg: 0 20px 80px #23382c18;
-}
+@import url("/static/theme.css");
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; color: var(--ink); background: var(--cream); font-size: 14px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-sans); color: var(--ink); background: var(--cream); font-size: 14px; -webkit-font-smoothing: antialiased; }
 button, input, textarea, select { font: inherit; }
 button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; color: inherit; }

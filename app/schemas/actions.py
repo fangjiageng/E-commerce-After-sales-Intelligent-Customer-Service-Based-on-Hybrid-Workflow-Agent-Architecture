@@ -1,7 +1,3 @@
-# 来源：公众号@小林coding
-# 后端八股网站：xiaolincoding.com
-# Agent网站：xiaolinnote.com
-# 简历模版：jianli.xiaolinnote.com
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -31,5 +27,5 @@ class CreateRefundResponse(BaseModel):
 
 class ResumeRequest(BaseModel):
     conversation_id: int
-    order_id: str | None = Field(default=None, min_length=1)   # ch06 订单选择器点选
-    confirmed: bool | None = None                              # ch08 工单预览 确认/取消
+    order_id: str | None = Field(default=None, min_length=1)   # 订单选择器点选
+    confirmed: bool | None = None                              # 工单预览 确认/取消

@@ -1,21 +1,15 @@
 <!doctype html>
-<!--
-  来源：公众号@小林coding
-  后端八股网站：xiaolincoding.com
-  Agent网站：xiaolinnote.com
-  简历模版：jianli.xiaolinnote.com
--->
+
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>喵喵优选 · 分类器评测详情</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='2' y='2' width='4' height='4' fill='%232b2632'/><rect x='10' y='2' width='4' height='4' fill='%232b2632'/><rect x='2' y='4' width='12' height='9' fill='%232b2632'/><rect x='3' y='3' width='2' height='3' fill='%23ff9f57'/><rect x='11' y='3' width='2' height='3' fill='%23ff9f57'/><rect x='3' y='5' width='10' height='7' fill='%23ff9f57'/><rect x='5' y='7' width='1' height='2' fill='%232b2632'/><rect x='10' y='7' width='1' height='2' fill='%232b2632'/><rect x='7' y='9' width='2' height='1' fill='%23ff8095'/></svg>" />
-  <link rel="stylesheet" href="/static/acceptance.css" />
+  <title>MewHelp · 分类器评测详情</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
   <style>
     /* micro vs macro 对照 */
     .avg { display: flex; gap: 14px; flex-wrap: wrap; }
-    .avgbox { flex: 1; min-width: 260px; border: 3px solid var(--ink); background: var(--paper); padding: 10px 13px; }
+    .avgbox { flex: 1; min-width: 260px; border: 1px solid var(--line); background: var(--paper); padding: 10px 13px; }
     .avgbox h3 { margin: 0 0 3px; font-size: 13px; }
     .avgbox .way { color: var(--muted); font-size: 11.5px; }
     .avgbox .nums { display: flex; gap: 14px; margin-top: 8px; font-size: 13px; }
@@ -25,7 +19,7 @@
     .scan { display: flex; flex-direction: column; gap: 5px; }
     .scanrow { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
     .scanrow .t { width: 3.4em; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
-    .scanrow .track { flex: 1; border: 2px solid var(--ink); background: var(--paper); height: 18px; }
+    .scanrow .track { flex: 1; border: 1px solid var(--line); background: var(--paper); height: 18px; }
     .scanrow .fill { height: 100%; background: var(--fur); display: block; }
     .scanrow.win .fill { background: var(--online); }
     .scanrow.inuse .t::after { content: " ◀"; color: var(--coral); }
@@ -34,19 +28,19 @@
 
     /* 混淆矩阵 17 宫格 */
     .mats { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); }
-    .mat { border: 3px solid var(--ink); background: var(--paper); }
+    .mat { border: 1px solid var(--line); background: var(--paper); }
     .mat .cap {
       display: flex; align-items: center; gap: 6px; padding: 4px 7px;
-      border-bottom: 2px solid var(--ink); font-size: 12.5px; font-weight: 700;
+      border-bottom: 1px solid var(--line); font-size: 12.5px; font-weight: 700;
     }
-    .mat.dirty .cap { background: #ffe9ec; }
+    .mat.dirty .cap { background: var(--danger-bg); }
     .mat .grid { display: grid; grid-template-columns: 1fr 1fr; }
-    .mat .c { padding: 5px 7px; font-size: 11.5px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+    .mat .c { padding: 5px 7px; font-size: 11.5px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .mat .c:nth-child(2n) { border-right: 0; }
     .mat .c:nth-child(n+3) { border-bottom: 0; }
     .mat .c { white-space: nowrap; }
     .mat .c b { display: block; font-size: 15px; font-variant-numeric: tabular-nums; }
-    .mat .c.tp b { color: #2f8f3c; }
+    .mat .c.tp b { color: var(--online); }
     .mat .c.fp b, .mat .c.fn b { color: var(--error); }
     .mat .c.k { color: var(--muted); }
 
@@ -54,23 +48,25 @@
     .tryrow { display: flex; gap: 8px; flex-wrap: wrap; }
     .tryrow input {
       flex: 1; min-width: 240px; font: inherit; font-size: 13px; padding: 7px 10px;
-      border: 3px solid var(--ink); background: var(--paper);
+      border: 1px solid var(--line); background: var(--paper);
     }
     .presets { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
     .sc { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
     .scrow { display: flex; align-items: center; gap: 9px; font-size: 12.5px; }
     .scrow .nm { width: 5.6em; text-align: right; flex-shrink: 0; }
-    .scrow .track { flex: 1; border: 2px solid var(--ink); background: var(--paper); height: 16px; position: relative; }
-    .scrow .fill { height: 100%; background: #e6dcc9; display: block; }
+    .scrow .track { flex: 1; border: 1px solid var(--line); background: var(--paper); height: 16px; position: relative; }
+    .scrow .fill { height: 100%; background: #ccd8c3; display: block; }
     .scrow.hit .fill { background: var(--online); }
     .scrow.hit .nm { font-weight: 700; }
     .scrow:not(.hit) { opacity: .62; }
     .scrow .v { width: 4em; font-variant-numeric: tabular-nums; }
     .scrow .line { position: absolute; top: -3px; bottom: -3px; width: 3px; background: var(--coral); }
-    .verdict { margin-top: 10px; font-size: 13px; background: var(--paper); border: 2px solid var(--ink); padding: 8px 11px; line-height: 1.75; }
+    .verdict { margin-top: 10px; font-size: 13px; background: var(--paper); border: 1px solid var(--line); padding: 8px 11px; line-height: 1.75; }
   </style>
+  <link rel="stylesheet" href="/static/admin.css" />
+  <meta name="theme-color" content="#356652" />
 </head>
-<body>
+<body class="mh-admin">
   <div class="wrap">
     <div class="topbar">
       <h1>分类器评测详情</h1>

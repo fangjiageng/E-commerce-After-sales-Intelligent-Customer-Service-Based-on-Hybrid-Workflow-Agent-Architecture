@@ -1,8 +1,4 @@
-# 来源：公众号@小林coding
-# 后端八股网站：xiaolincoding.com
-# Agent网站：xiaolinnote.com
-# 简历模版：jianli.xiaolinnote.com
-"""ch09 证据置信度(README 四信号):量化「这批证据到底符不符合用户问题」。
+"""证据置信度(README 四信号):量化「这批证据到底符不符合用户问题」。
 
 信号(全部来自检索/精排结果,零额外模型调用):
   top1_score     精排 Top1 的 rerank_score(证据里最强的一条有多强)

@@ -1,5 +1,5 @@
 # =============================================================
-# ch09 · Langfuse 自部署观测栈(独立于主 compose,数据不出门)
+# Langfuse 自部署观测栈(独立于主 compose,数据不出门)
 # 起停:make langfuse-up / make langfuse-down;界面 http://localhost:3000
 # 基于官方 langfuse/langfuse docker-compose.yml,本仓库改动三处:
 #   1) LANGFUSE_INIT_* 填了默认值——headless 初始化,起来即有组织/项目/固定 key,免手工点界面

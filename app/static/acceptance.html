@@ -1,26 +1,19 @@
 <!doctype html>
-<!--
-  来源：公众号@小林coding
-  后端八股网站：xiaolincoding.com
-  Agent网站：xiaolinnote.com
-  简历模版：jianli.xiaolinnote.com
--->
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>喵喵优选 · 分类器验收总览</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect x='2' y='2' width='4' height='4' fill='%232b2632'/><rect x='10' y='2' width='4' height='4' fill='%232b2632'/><rect x='2' y='4' width='12' height='9' fill='%232b2632'/><rect x='3' y='3' width='2' height='3' fill='%23ff9f57'/><rect x='11' y='3' width='2' height='3' fill='%23ff9f57'/><rect x='3' y='5' width='10' height='7' fill='%23ff9f57'/><rect x='5' y='7' width='1' height='2' fill='%232b2632'/><rect x='10' y='7' width='1' height='2' fill='%232b2632'/><rect x='7' y='9' width='2' height='1' fill='%23ff8095'/></svg>" />
-  <link rel="stylesheet" href="/static/acceptance.css" />
+  <title>MewHelp · 分类器验收总览</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
   <style>
     .cards { margin-top: 16px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
     .gcard {
-      background: var(--cream); border: 4px solid var(--ink); box-shadow: var(--shadow);
+      background: var(--cream); border: 1px solid var(--line); box-shadow: var(--shadow);
       padding: 12px 14px 14px; display: flex; flex-direction: column;
     }
     .gcard .head { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
     .gcard .no {
-      border: 3px solid var(--ink); background: var(--paper); width: 26px; height: 26px;
+      border: 1px solid var(--line); background: var(--paper); width: 26px; height: 26px;
       display: flex; align-items: center; justify-content: center;
       font-weight: 700; font-size: 13px; flex-shrink: 0;
     }
@@ -29,13 +22,15 @@
     .gcard h3 { font-size: 14px; margin: 0; }
     .gcard .headline {
       margin: 10px 0 0; font-size: 13px; line-height: 1.7; background: var(--paper);
-      border: 2px solid var(--ink); padding: 7px 10px;
+      border: 1px solid var(--line); padding: 7px 10px;
     }
-    .gcard .note { margin-top: 7px; font-size: 12px; color: #6d6478; line-height: 1.7; }
+    .gcard .note { margin-top: 7px; font-size: 12px; color: var(--muted); line-height: 1.7; }
     .gcard .foot { margin-top: auto; }
   </style>
+  <link rel="stylesheet" href="/static/admin.css" />
+  <meta name="theme-color" content="#356652" />
 </head>
-<body>
+<body class="mh-admin">
   <div class="wrap">
     <div class="topbar">
       <h1>分类器验收总览</h1>
